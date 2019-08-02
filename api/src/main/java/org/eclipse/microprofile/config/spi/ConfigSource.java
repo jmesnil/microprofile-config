@@ -41,10 +41,15 @@ import java.util.Set;
  * <ol>
  * <li>System properties (default ordinal=400)</li>
  * <li>Environment properties (default ordinal=300)
- * <p>Some operating systems allow only alphabetic characters or an underscore, _, in environment variables. 
+ * <li>/META-INF/microprofile-config.properties (ordinal=100)</li>
+ * </ol>
+ * </p>
+ *
+ * <h3>Environment Variables Mapping Rules</h3>
+ * <p>Some operating systems allow only alphabetic characters or an underscore, _, in environment variables.
  * Other characters such as ., /, etc may be disallowed. In order to set a value for a config property 
  * that has a name containing such disallowed characters from an environment variable, the following rules are used.
- *    This ConfigSource searches 3 environment variables for a given property name (e.g. {@code "com.ACME.size"}):</p>
+ * This ConfigSource searches 3 environment variables for a given property name (e.g. {@code "com.ACME.size"}):</p>
  *        <ol>
  *            <li>Exact match (i.e. {@code "com.ACME.size"})</li>
  *            <li>Replace the character that is neither alphanumeric nor _ with _ (i.e. {@code "com_ACME_size"})</li>
@@ -52,14 +57,9 @@ import java.util.Set;
  *        </ol>
  *    <p>The first environment variable that is found is returned by this ConfigSource.</p>
  * </li>
- * <li>/META-INF/microprofile-config.properties (ordinal=100)</li>
- * </ol>
  *
  * <p>Custom ConfigSource will get picked up via the {@link java.util.ServiceLoader} mechanism and and can be registered by
- * providing a file
- * <pre>
- *     META-INF/services/org.eclipse.microprofile.config.spi.ConfigSource
- * </pre>
+ * providing a file {@code META-INF/services/org.eclipse.microprofile.config.spi.ConfigSource}
  * which contains the fully qualified {@code ConfigSource} implementation class name as content.
  *
  * <p>Adding a dynamic amount of custom config sources can be done programmatically via
